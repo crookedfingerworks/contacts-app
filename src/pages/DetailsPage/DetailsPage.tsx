@@ -9,12 +9,15 @@ import {
     Typography,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAppSelector } from "../../app/store/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/store/hooks";
 import SubheaderText from "../../components/SubheaderText/SubheaderText";
+import { deleteContact } from "../../app/store/actions/contactsActions";
+import AlertDialog from "../../components/AlertDialog/AlertDialog";
 
 function DetailsPage() {
     const navigate = useNavigate();
     const { contactId } = useParams();
+    const dispatch = useAppDispatch();
     const contact = useAppSelector((state) =>
         state.contacts.contacts.find((current) => current.id === contactId)
     );
@@ -35,6 +38,11 @@ function DetailsPage() {
 
     const handleEditClick = () => {
         navigate(`/form/${contact.id}`);
+    };
+
+    const handleDeleteClick = () => {
+        dispatch(deleteContact(contact.id));
+        navigate(`/`);
     };
 
     return (
@@ -60,7 +68,13 @@ function DetailsPage() {
                 <Button variant="outlined" onClick={handleEditClick}>
                     Edit
                 </Button>
-                <Button variant="text">Delete</Button>
+                <AlertDialog
+                    triggerLabel="Delete"
+                    title="Are you sure you want to delete this contact?"
+                    desc="This action cannot be reverted."
+                    confirmLabel="Delete"
+                    onConfirm={handleDeleteClick}
+                />
             </Stack>
             <Avatar
                 alt={`${contact.name} Avatar`}

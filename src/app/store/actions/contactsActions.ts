@@ -3,6 +3,7 @@ import {
     GET_CONTACTS,
     CONTACTS_ERROR,
     UPDATE_CONTACT,
+    DELETE_CONTACT,
 } from "../types";
 import contactsHttp from "../../api/contactsHttp";
 import { Contact } from "../../data/types";
@@ -34,4 +35,9 @@ export const addContact = (contact: Contact) => ({
 export const updateContact = (contact: Contact) => ({
     type: UPDATE_CONTACT,
     payload: contact,
+});
+
+export const deleteContact = (id: Pick<Contact, "id">) => ({
+    type: DELETE_CONTACT,
+    payload: id,
 });
