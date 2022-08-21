@@ -21,10 +21,16 @@ const ROUTES: Routes = {
         showInHeader: true,
     },
     FORM: {
-        label: "Add New Contact Form",
+        label: "Add New Contact",
         path: "/form",
         page: <FormPage />,
         showInHeader: true,
+    },
+    FORM_EDIT: {
+        label: "Update Contact Detail",
+        path: "/form/:contactId",
+        page: <FormPage />,
+        showInHeader: false,
     },
     DETAILS: {
         label: "Contact Details",

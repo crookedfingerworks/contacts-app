@@ -1,20 +1,34 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useMemo } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { Box } from "@mui/material";
 import { Contact } from "../../app/data/types";
-import { useAppDispatch } from "../../app/store/hooks";
-import { addContact } from "../../app/store/actions/contactsActions";
+import { useAppDispatch, useAppSelector } from "../../app/store/hooks";
+import {
+    addContact,
+    updateContact,
+} from "../../app/store/actions/contactsActions";
 import ContactDetailsForm from "../../components/ContactDetailsForm/ContactDetailsForm";
-import { ContactDetailsFormInput } from "../../components/ContactDetailsForm/type";
 
 function FormPage() {
     const navigate = useNavigate();
+    const { contactId } = useParams();
+    const contact = useAppSelector((state) =>
+        state.contacts.contacts.find((current) => current.id === contactId)
+    );
     const dispatch = useAppDispatch();
-    const handleOnSubmit = (data: ContactDetailsFormInput) => {
-        const newContact: Contact = {
-            ...data,
+
+    const title = contact ? "Update Contact Detail" : "Add New Contact";
+    const defaultValues: Contact = useMemo(() => {
+        if (contact) {
+            return contact;
+        }
+        return {
             id: uuidv4(),
+            name: "",
+            email: "",
+            cell: "",
+            nat: "",
             // mock values
             avatar: {
                 large: "https://place-hold.it/128x128.jpg",
@@ -24,20 +38,19 @@ function FormPage() {
             gender: "male",
             dob: "12-09-1969",
         };
-        dispatch(addContact(newContact));
+    }, [contact]);
+
+    const handleOnSubmit = (data: Contact) => {
+        if (contact) dispatch(updateContact(data));
+        else dispatch(addContact(data));
         navigate("/");
     };
 
     return (
         <Box>
             <ContactDetailsForm
-                title="Add New Contact Form"
-                defaultValues={{
-                    name: "",
-                    email: "",
-                    cell: "",
-                    nat: "",
-                }}
+                title={title}
+                defaultValues={defaultValues}
                 onSubmit={handleOnSubmit}
             />
         </Box>

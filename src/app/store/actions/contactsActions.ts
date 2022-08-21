@@ -1,4 +1,9 @@
-import { ADD_CONTACT, GET_CONTACTS, CONTACTS_ERROR } from "../types";
+import {
+    ADD_CONTACT,
+    GET_CONTACTS,
+    CONTACTS_ERROR,
+    UPDATE_CONTACT,
+} from "../types";
 import contactsHttp from "../../api/contactsHttp";
 import { Contact } from "../../data/types";
 import { AppThunk } from "../store";
@@ -23,5 +28,10 @@ export const fetchContacts = (): AppThunk => async (dispatch) => {
 
 export const addContact = (contact: Contact) => ({
     type: ADD_CONTACT,
+    payload: contact,
+});
+
+export const updateContact = (contact: Contact) => ({
+    type: UPDATE_CONTACT,
     payload: contact,
 });

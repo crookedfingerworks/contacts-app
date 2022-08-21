@@ -1,6 +1,6 @@
 import { Contact } from "../../data/types";
 import formatDate from "../formatDate";
-import { ADD_CONTACT, GET_CONTACTS } from "../types";
+import { ADD_CONTACT, GET_CONTACTS, UPDATE_CONTACT } from "../types";
 
 export type ContactsState = {
     contacts: Contact[];
@@ -37,6 +37,17 @@ const contactsReducer = (state = initialState, action: any) => {
                 contacts: [action.payload, ...state.contacts],
                 loading: false,
             };
+        case UPDATE_CONTACT: {
+            const newContacts = [...state.contacts];
+            const oldIndex = newContacts.findIndex(
+                (current) => current.id === action.payload.id
+            );
+            newContacts.splice(oldIndex, 1);
+            return {
+                contacts: [action.payload, ...newContacts],
+                loading: false,
+            };
+        }
         default:
             return state;
     }

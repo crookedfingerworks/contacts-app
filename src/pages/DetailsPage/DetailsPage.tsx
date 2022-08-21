@@ -8,11 +8,12 @@ import {
     Stack,
     Typography,
 } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "../../app/store/hooks";
 import SubheaderText from "../../components/SubheaderText/SubheaderText";
 
 function DetailsPage() {
+    const navigate = useNavigate();
     const { contactId } = useParams();
     const contact = useAppSelector((state) =>
         state.contacts.contacts.find((current) => current.id === contactId)
@@ -31,6 +32,11 @@ function DetailsPage() {
             </Box>
         );
     }
+
+    const handleEditClick = () => {
+        navigate(`/form/${contact.id}`);
+    };
+
     return (
         <Paper
             style={{
@@ -51,7 +57,9 @@ function DetailsPage() {
                     marginBottom: "3rem",
                 }}
             >
-                <Button variant="outlined">Edit</Button>
+                <Button variant="outlined" onClick={handleEditClick}>
+                    Edit
+                </Button>
                 <Button variant="text">Delete</Button>
             </Stack>
             <Avatar

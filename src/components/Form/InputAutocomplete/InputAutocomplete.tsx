@@ -26,6 +26,7 @@ export function InputAutocomplete({
         <Autocomplete
             disablePortal
             options={options}
+            value={value}
             onChange={(event: any, newValue: string | null) =>
                 onChange(newValue)
             }

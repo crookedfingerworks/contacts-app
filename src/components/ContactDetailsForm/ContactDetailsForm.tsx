@@ -5,14 +5,14 @@ import NATIONALITIES from "../../app/data/nationalities";
 import InputAutocomplete from "../Form/InputAutocomplete/InputAutocomplete";
 import InputText from "../Form/InputText/InputText";
 import { ContactDetailsFormProps } from "./ContactDetailsForm.props";
-import { ContactDetailsFormInput } from "./type";
+import { Contact } from "../../app/data/types";
 
 function ContactDetailsForm({
     title,
     defaultValues,
     onSubmit,
 }: ContactDetailsFormProps) {
-    const { handleSubmit, control } = useForm<ContactDetailsFormInput>({
+    const { handleSubmit, control } = useForm<Contact>({
         defaultValues,
     });
     return (

@@ -1,8 +1,8 @@
-import { ContactDetailsFormInput } from "./type";
+import { Contact } from "../../app/data/types";
 
 export type ContactDetailsFormProps = {
     title: string;
-    defaultValues: ContactDetailsFormInput;
+    defaultValues: Contact;
     // eslint-disable-next-line no-unused-vars
-    onSubmit: (data: ContactDetailsFormInput) => void;
+    onSubmit: (data: Contact) => void;
 };
