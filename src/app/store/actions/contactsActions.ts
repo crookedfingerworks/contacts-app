@@ -22,7 +22,7 @@ export const fetchContacts = (): AppThunk => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: CONTACTS_ERROR,
-            payload: console.log(error),
+            payload: error as string,
         });
     }
 };
